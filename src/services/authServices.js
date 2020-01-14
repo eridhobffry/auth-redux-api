@@ -1,5 +1,5 @@
 // export const registerUserService = (request) => {
-//   const REGISTER_API_ENDPOINT = 'http://localhost:3000/api/v1/register';
+//   const REGISTER_API_ENDPOINT = process.env.REACT_APP_API_URL_REGISTER
 
 //   const parameters = {
 //     method: 'POST',
