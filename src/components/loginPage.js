@@ -9,11 +9,11 @@ class LoginPage extends Component {
   onHandleLogin = event => {
     event.preventDefault();
 
-    let email = event.target.email.value;
+    let username = event.target.username.value;
     let password = event.target.password.value;
 
     const data = {
-      email,
+      username,
       password
     };
 
@@ -42,8 +42,8 @@ class LoginPage extends Component {
         {!isSuccess ? <div>{message}</div> : <Redirect to="dashboard" />}
         <form onSubmit={this.onHandleLogin}>
           <div>
-            <label htmlFor="email">Email</label>
-            <input type="text" name="email" id="email" />
+            <label htmlFor="email">Username</label>
+            <input type="text" name="username" id="username" />
           </div>
           <div>
             <label htmlFor="password">Password</label>
