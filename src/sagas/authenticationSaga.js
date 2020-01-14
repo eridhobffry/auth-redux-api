@@ -23,8 +23,8 @@ import * as types from "../general/constants";
 export function* loginSaga(payload) {
   try {
     const response = yield call(loginUserService, payload);
-    yield put(loginRequestSuccess(response, payload.hash));
-    // yield [put({ type: types.LOGIN_USER_SUCCESS, response })];
+    // yield put(loginRequestSuccess(response, payload.hash));
+    yield [put({ type: types.LOGIN_USER_SUCCESS, response })];
   } catch (error) {
     yield put(loginRequestError(error.reasonKey));
     // yield put({ type: types.LOGIN_USER_ERROR, error });
