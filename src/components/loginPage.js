@@ -43,7 +43,7 @@ class LoginPage extends Component {
         <form onSubmit={this.onHandleLogin}>
           <div>
             <label htmlFor="email">Email</label>
-            <input type="email" name="email" id="email" />
+            <input type="text" name="email" id="email" />
           </div>
           <div>
             <label htmlFor="password">Password</label>

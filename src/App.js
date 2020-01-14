@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import PrivateRoute from "./privateRoute";
-import LoginPage from "../components/loginPage";
-import RegisterPage from "../components/registerPage";
-import DashboardPage from "../components/dashboardPage";
+import LoginPage from "./components/loginPage";
+import RegisterPage from "./components/registerPage";
+import DashboardPage from "./components/dashboardPage";
 
 class App extends Component {
   render() {
