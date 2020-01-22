@@ -20,21 +20,57 @@ class LoginPage extends Component {
     this.props.dispatch(loginUserAction(data));
   };
 
+  isAuth = () => {
+    const URL = "https://api.supirin-yuk.com/gateway/web/login";
+    fetch(URL, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      }
+    }).then(function(response) {
+      console.log("hallo, ini adalah response nya - " + response.success);
+    });
+  };
+
   componentDidMount() {
     document.title = "Login";
+    // this.isAuth();
+    // 	const URL = 'ttps://api.supirin-yuk.com/gateway/web/login';
+    // fetch(URL)
+    //   .then(res => {
+    // 		const isSuccess = res.status >= 200 && res.status < 300;
+    // 		const message = res.login.res.message;
+    // 		if (isSuccess) {
+    // 			setCookie("token", response.token, 1);
+    // 		}
+    // 	})
+
+    //   .catch(err => console.log(err));
   }
 
   render() {
     let isSuccess, message;
-
-    if (this.props.response.login.hasOwnProperty("response")) {
-      isSuccess = this.props.response.login.response.success;
-      message = this.props.response.login.response.message;
-
-      if (isSuccess) {
-        setCookie("token", this.props.response.login.response.token, 1);
+    const URL = "https://api.supirin-yuk.com/gateway/web/login";
+    fetch(URL, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
       }
-    }
+    }).then(function(response) {
+      console.log("hallo, ini adalah response nya - " + response.success);
+    });
+
+    // const response = fetch("https://api.supirin-yuk.com/gateway/web/login");
+    // const isSuccess = response.status >= 200 && response.status < 300;
+
+    // if (this.props.response.login.hasOwnProperty("response")) {
+    //   isSuccess = this.props.response.login.response.success;
+    //   message = this.props.response.login.response.message;
+
+    //   if (isSuccess) {
+    //     setCookie("token", this.props.response.login.response.token, 1);
+    //   }
+    // }
 
     return (
       <div>
