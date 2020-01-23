@@ -7,6 +7,9 @@ export const loginUserAction = user => {
   };
 };
 
+export const requestApiData = () => ({ type: types.REQUEST_API_DATA });
+export const receiveApiData = data => ({ type: types.RECEIVE_API_DATA, data });
+
 export const loginRequestSuccess = (response, hash = "") => ({
   type: types.LOGIN_USER_SUCCESS,
   response,

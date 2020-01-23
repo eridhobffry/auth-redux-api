@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { loginUserAction } from "../actions/authenticationActions";
 import { setCookie } from "../utils/cookies";
 import { loadState } from "../services/connectivity/localStorage";
+import { bindActionCreators } from "redux";
+import { requestApiData } from "../actions/authenticationActions";
 
 class LoginPage extends Component {
   onHandleLogin = event => {
@@ -18,23 +20,13 @@ class LoginPage extends Component {
       password
     };
 
-    this.props.dispatch(loginUserAction(data));
-  };
-
-  isAuth = () => {
-    const URL = "https://api.supirin-yuk.com/gateway/web/login";
-    fetch(URL, {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      }
-    }).then(function(response) {
-      console.log("hallo, ini adalah response nya - " + response.success);
-    });
+    // this.props.dispatch(loginUserAction(data));
+    this.props.loginUserAction(data);
   };
 
   componentDidMount() {
     document.title = "Login";
+    this.props.requestApiData();
     // this.isAuth();
     // 	const URL = 'ttps://api.supirin-yuk.com/gateway/web/login';
     // fetch(URL)
@@ -49,6 +41,13 @@ class LoginPage extends Component {
     //   .catch(err => console.log(err));
   }
 
+  person = (x, i) => (
+    <div>
+      <h1>{x.name.first}</h1>
+      {/* <h1>{x.password}</h1> */}
+    </div>
+  );
+
   render() {
     // localStorage.clear();
     // const stateLocal = loadState();
@@ -58,17 +57,16 @@ class LoginPage extends Component {
     // } else {
     //   console.log("totally wrong on login");
     // }
+    const { results = [] } = this.props.data;
     return (
       <div>
         <h3>Login Page</h3>
-
-        {/* {!stateLocal.success ? (
-          <div>{stateLocal.message}</div>
+        {results.length ? (
+          <small>{results.map(this.person)}</small>
         ) : (
-          <Redirect to="dashboard" />
-        )} */}
-
-        {loadState() !== undefined && <Redirect to="dashboard" />}
+          <small>loading..</small>
+        )}
+        {/* {loadState() !== undefined && <Redirect to="dashboard" />} */}
         <form onSubmit={this.onHandleLogin}>
           <div>
             <label htmlFor="email">Username</label>
@@ -88,6 +86,15 @@ class LoginPage extends Component {
   }
 }
 
-const mapStateToProps = response => ({ response });
+// const mapStateToProps = (response, state) => ({ response, data: state.data });
+function mapStateToProps(state, response) {
+  const data = state.data;
 
-export default connect(mapStateToProps)(LoginPage);
+  // component receives additionally:
+  return { data, response };
+}
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ requestApiData, loginUserAction }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
