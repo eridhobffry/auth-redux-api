@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import { loginUserAction } from "../actions/authenticationActions";
 import { setCookie } from "../utils/cookies";
+import { loadState } from "../services/connectivity/localStorage";
 
 class LoginPage extends Component {
   onHandleLogin = event => {
@@ -49,33 +50,25 @@ class LoginPage extends Component {
   }
 
   render() {
-    let isSuccess, message;
-    const URL = "https://api.supirin-yuk.com/gateway/web/login";
-    fetch(URL, {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      }
-    }).then(function(response) {
-      console.log("hallo, ini adalah response nya - " + response.success);
-    });
-
-    // const response = fetch("https://api.supirin-yuk.com/gateway/web/login");
-    // const isSuccess = response.status >= 200 && response.status < 300;
-
-    // if (this.props.response.login.hasOwnProperty("response")) {
-    //   isSuccess = this.props.response.login.response.success;
-    //   message = this.props.response.login.response.message;
-
-    //   if (isSuccess) {
-    //     setCookie("token", this.props.response.login.response.token, 1);
-    //   }
+    // localStorage.clear();
+    // const stateLocal = loadState();
+    // console.log("Last Token from Component: " + loadState());
+    // if (stateLocal !== undefined) {
+    //   console.log("do something in component login");
+    // } else {
+    //   console.log("totally wrong on login");
     // }
-
     return (
       <div>
         <h3>Login Page</h3>
-        {!isSuccess ? <div>{message}</div> : <Redirect to="dashboard" />}
+
+        {/* {!stateLocal.success ? (
+          <div>{stateLocal.message}</div>
+        ) : (
+          <Redirect to="dashboard" />
+        )} */}
+
+        {loadState() !== undefined && <Redirect to="dashboard" />}
         <form onSubmit={this.onHandleLogin}>
           <div>
             <label htmlFor="email">Username</label>

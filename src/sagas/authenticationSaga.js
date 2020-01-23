@@ -3,14 +3,7 @@ import {
   // registerUserService,
   loginUserService
 } from "../services/authServices";
-
-import forwardTo from "../helpers/forward_location";
-import * as api from "../services/connectivity/api.auth";
-
-import {
-  loginRequestSuccess,
-  loginRequestError
-} from "../actions/authenticationActions";
+import { Redirect } from "react-router-dom";
 import * as types from "../general/constants";
 import { saveState, loadState } from "../services/connectivity/localStorage";
 
@@ -28,17 +21,27 @@ import { saveState, loadState } from "../services/connectivity/localStorage";
 export function* loginSaga(payload) {
   try {
     const response = yield call(loginUserService, payload);
+    localStorage.removeItem("state");
     if (response.success) {
       saveState(response);
+      console.log("last status response on success saga: " + response.success);
+      console.log(
+        "last status loadstate on success saga: " + loadState().success
+      );
+    } else {
+      saveState(response);
+      console.log("last status response on failed saga: " + response.success);
+      console.log(
+        "last status loadstate on failed saga: " + loadState().success
+      );
     }
-    console.log(loadState().token);
+
     // yield put(loginRequestSuccess(response, payload.hash));
   } catch (error) {
     // yield put(loginRequestError(error.reasonKey));
     yield put({ type: types.LOGIN_USER_ERROR, error });
   } finally {
     yield [put({ type: types.LOGIN_USER_SUCCESS, sending: false })];
-    // forwardTo("/dashboard");
   }
 }
 
