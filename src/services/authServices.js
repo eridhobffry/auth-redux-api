@@ -1,3 +1,4 @@
+import { compareSync } from "bcryptjs";
 // export const registerUserService = (request) => {
 //   const REGISTER_API_ENDPOINT = process.env.REACT_APP_API_URL_REGISTER
 
@@ -31,6 +32,22 @@ export const loginUserService = request => {
 
   return fetch(LOGIN_API_ENDPOINT, parameters)
     .then(response => {
+      // const userExists = !request.user.username === undefined;
+      // if (
+      //   userExists &&
+      //   compareSync(request.user.password, request.user.username)
+      // ) {
+      //   return response.json();
+      // } else {
+      //   if (userExists) {
+      //     throw new Error("Wrong password");
+      //   } else {
+      //     throw new Error("User doesn't exist");
+      //   }
+      // }
+
+      // simple return
+      //
       return response.json();
     })
     .then(json => {
